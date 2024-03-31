@@ -1,0 +1,10 @@
+<form id="search-form">
+    <label for="tipo">Tipo de Producto:</label>
+    <select id="tipo" name="tipo">
+      <% tiposDeColeccion.forEach(tipo => { %>
+        <option value="<%= tipo %>"><%= tipo %></option>
+      <% }); %>
+    </select>
+    <button type="submit">Buscar</button>
+</form>
+  

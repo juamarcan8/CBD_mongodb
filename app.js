@@ -1,68 +1,74 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = 3000;
 const uri = 'mongodb://localhost:27017'; // URI de conexión a MongoDB
 const dbName = 'CBD'; // Nombre de tu base de datos
 
-
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static('styles'))
+
+let client; // Definir la variable client en el alcance global
 
 async function conectarMongoDB() {
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
   try {
-    // Conectar al servidor MongoDB
     await client.connect();
-
-    // Seleccionar la base de datos
-    const db = client.db(dbName);
-    
     console.log('Conexión a la base de datos establecida:', dbName);
-
-    return db;
+    return client.db(dbName);
   } catch (error) {
     console.error('Error al conectar a MongoDB:', error);
     throw error;
   }
 }
 
+async function obtenerTiposDeColeccion() {
+  try {
+    const db = await conectarMongoDB(); // Llama a conectarMongoDB para obtener la base de datos
+    const colecciones = await db.listCollections().toArray();
+    return colecciones.map(c => c.name);
+  } catch (error) {
+    console.error('Error al obtener tipos de colección:', error);
+    throw error;
+  }
+}
 // Define una ruta para la raíz de la aplicación
 app.get('/', (req, res) => {
     res.render('index'); // Renderiza la página index.ejs
 });
 
-// Iniciar el servidor y conectar a MongoDB
-app.listen(PORT, async () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-
-  // Conectar a MongoDB
+app.get('/productos', async (req, res) => {
   try {
-    const db = await conectarMongoDB();
-
-    // Pasar la conexión a las rutas que lo necesiten
-    app.set('db', db);
+    let tiposDeColeccion = await obtenerTiposDeColeccion();
+    let tipoSeleccionado = req.query.tipo;
+    const db = client.db(dbName);
+    if (tipoSeleccionado && tiposDeColeccion.includes(tipoSeleccionado)) {
+      
+      productos = await db.collection(tipoSeleccionado).find({}).toArray();
+      res.render('layout', { content: 'search-form', tiposDeColeccion });
+    } else {
+      tipoSeleccionado = "camisetas"
+      productos = await db.collection(tipoSeleccionado).find({}).toArray();
+      res.render('layout', { content: 'search-form', tiposDeColeccion });
+    }
   } catch (error) {
-    console.error('Error al conectar a MongoDB:', error);
+    console.error('Error al obtener tipos de colección:', error);
+    res.status(500).send('Error interno del servidor');
   }
 });
 
 
-// Ejemplo de código para agregar un nuevo producto a la base de datos
-app.post('/productos', (req, res) => {
-    // Obtener los datos del producto del cuerpo de la solicitud
-    const { nombre, precio, cantidad } = req.body;
-  
-    // Guardar el producto en la base de datos
-    const nuevoProducto = new Producto({ nombre, precio, cantidad });
-    nuevoProducto.save()
-      .then(producto => {
-        res.json(producto);
-      })
-      .catch(error => {
-        console.error(error);
-        res.status(500).json({ error: 'Error al agregar el producto' });
-      });
-  });
-  
+
+// Iniciar el servidor y conectar a MongoDB
+app.listen(PORT, async () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
+  try {
+    await conectarMongoDB();
+  } catch (error) {
+    console.error('Error al conectar a MongoDB:', error);
+  }
+});
