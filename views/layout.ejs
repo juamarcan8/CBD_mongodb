@@ -4,36 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buscador de Productos</title>
-  <link rel="stylesheet" href="layout.css">
-
+  <link rel="stylesheet" href="/layout.css">
 </head>
 <body>
   <div class="container">
     <h1>Buscador de Productos</h1>
+
+    <% if (content === 'add-product-form') %>
+      <%- include('add-product-form.ejs') %>
+  
+
     <% if (content === 'search-form') { %>
-      <%- include('search-form.ejs') %> <!-- Incluir el formulario de búsqueda solo si content es 'search-form' -->
-    <% } %>
+      <%- include('search-form.ejs') %>  <% } %>
     <div id="results-container">
-      <!-- Aquí se mostrarán los resultados de la búsqueda -->
       <% if (typeof productos !== 'undefined' && productos.length > 0) { %>
         <h2>Resultados de la búsqueda:</h2>
         <ul>
           <% productos.forEach(producto => { %>
-            <a href = "/producto/<%= producto._id %>">
-            <li><%= producto.nombre %>: <%= producto.precio %>
+            <a href="/producto/<%= producto._id %>">
+              <li>
+                <%= producto.nombre %>: <%= producto.precio %>
+                <form action="/editar" method="GET"> <input type="hidden" name="id" value="<%= producto._id %>"> <button type="submit">Editar</button> </form>
+              </li>
             </a>
-                <form action="/editar" method="GET"> <!-- Formulario para editar el producto -->
-                    <input type="hidden" name="id" value="<%= producto._id %>"> <!-- Campo oculto con el ID del producto -->
-                    <button type="submit">Editar</button> <!-- Botón de editar -->
-                  </form>
-            </li>
-           
           <% }); %>
         </ul>
       <% } else { %>
         <p>No hay resultados para mostrar.</p>
       <% } %>
     </div>
+
   </div>
+
 </body>
 </html>

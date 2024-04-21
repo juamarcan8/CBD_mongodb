@@ -84,3 +84,19 @@ body {
     color: blue; /* Cambia el color del texto al pasar el ratón */
   }
   
+
+  /* Estilos para el botón "Añadir Producto" */
+.add-product-button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.add-product-button:hover {
+  background-color: #0056b3;
+}

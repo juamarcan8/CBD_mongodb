@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Añadir Producto</title>
+  <link rel="stylesheet" href="styles/add-product-form.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Añadir Nuevo Producto</h2>
+    <form action="/productos/agregar" method="POST">
+      <label for="tipo">Tipo de Colección:</label>
+      <select name="tipo" id="tipo">
+        <% tiposDeColeccion.forEach(tipo => { %>
+          <option value="<%= tipo %>"><%= tipo %></option>
+      <% }); %>
+      </select>
+      <label for="nombre">Nombre:</label>
+      <input type="text" name="nombre" id="nombre" required>
+      <label for="descripcion">Descripción:</label>
+      <textarea name="descripcion" id="descripcion" rows="4" required></textarea>
+      <label for="precio">Precio:</label>
+      <input type="number" name="precio" id="precio" step="0.01" required>
+      <label for="tallas">Tallas:</label>
+      <input type="text" name="tallas" id="tallas" placeholder="S, M, L, XL" required>
+      <label for="colores">Colores:</label>
+      <input type="text" name="colores" id="colores" placeholder="blanco, negro, azul, rojo" required>
+      <label for="cantidad">Cantidad:</label>
+      <input type="number" name="cantidad" id="cantidad" required>
+      <label for="imagenes">Imágenes:</label>
+      <input type="text" name="imagenes" id="imagenes" placeholder="imagen1.jpg, imagen2.jpg" required>
+      <label for="proveedor-nombre">Nombre del Proveedor:</label>
+      <input type="text" name="proveedor-nombre" id="proveedor-nombre" required>
+      <label for="proveedor-contacto">Contacto del Proveedor:</label>
+      <input type="email" name="proveedor-contacto" id="proveedor-contacto" required>
+      <button type="submit">Agregar Producto</button>
+    </form>
+  </div>
+</body>
+</html>
