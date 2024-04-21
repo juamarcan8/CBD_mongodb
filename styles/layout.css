@@ -1,93 +1,92 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-  }
-  
-  .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  h1 {
-    color: #333;
-  }
-  
-  
-  /* Estilos para el listado de productos */
-  ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  li {
-    border-bottom: 1px solid #ddd;
-    padding: 10px 0;
-  }
-  
-  li:last-child {
-    border-bottom: none;
-  }
-  
-  /* Estilos para el formulario de búsqueda */
-  form {
-    margin-bottom: 20px;
-  }
-  
-  form label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  form select,
-  form button {
-    padding: 10px;
-    font-size: 16px;
-  }
-  
-  form button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-  }
-  
-  form button:hover {
-    background-color: #0056b3;
-  }
-  #results-container ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  #results-container ul li {
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between; /* Alinear los elementos a los extremos */
-  }
-  
-  #results-container ul li button {
-    margin-left: 10px; /* Espacio entre el producto y el botón */
-  }
-  a {
-    text-decoration: none; /* Elimina el subrayado por defecto */
-    color: black; /* Color del texto por defecto */
-  }
-  
-  a:hover {
-    text-decoration: underline; /* Subrayado cuando se pasa el ratón */
-    color: blue; /* Cambia el color del texto al pasar el ratón */
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+}
 
-  /* Estilos para el botón "Añadir Producto" */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #333;
+}
+
+/* Estilos para el listado de productos */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+/* Estilos para el formulario de búsqueda */
+form {
+  margin-bottom: 20px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+form select,
+form button {
+  padding: 10px;
+  font-size: 16px;
+}
+
+form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+#results-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+#results-container ul li {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between; /* Alinear los elementos a los extremos */
+}
+
+#results-container ul li button {
+  margin-left: 10px; /* Espacio entre el producto y el botón */
+}
+
+a {
+  text-decoration: none; /* Elimina el subrayado por defecto */
+  color: black; /* Color del texto por defecto */
+}
+
+a:hover {
+  text-decoration: underline; /* Subrayado cuando se pasa el ratón */
+  color: blue; /* Cambia el color del texto al pasar el ratón */
+}
+
+/* Estilos para el botón "Añadir Producto" */
 .add-product-button {
-  display: inline-block;
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #007bff;
@@ -99,4 +98,27 @@ body {
 
 .add-product-button:hover {
   background-color: #0056b3;
+}
+
+/* Estilos para el botón "Buscar" */
+.search-form-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.search-form-button:hover {
+  background-color: #218838;
+}
+
+/* Ajustes para alinear los botones a la derecha */
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
