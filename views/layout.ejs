@@ -15,7 +15,7 @@
         <%- include('search-form.ejs') %>  
       <% } %>
 
-      <% if (content !== 'add-product-form') { %>
+      <% if (content !== 'add-product-form' && content !== 'product-details') { %>
         <a href="/productos/agregar">
           <button class="add-product-button">Agregar Producto</button>
         </a>
@@ -24,6 +24,8 @@
 
     <% if (content === 'add-product-form') { %>
       <%- include('add-product-form.ejs') %>
+      <% } else if (content === 'product-details') { %>
+        <%- include('product-details.ejs') %>
     <% } else { %>
       <div id="results-container">
         <% if (typeof productos !== 'undefined' && productos.length > 0) { %>
