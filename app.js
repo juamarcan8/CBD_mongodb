@@ -49,6 +49,19 @@ async function obtenerTiposDeColeccion() {
      throw error;
   }
  }
+
+ async function eliminarProducto(productoId) {
+  try {
+    const db = await conectarMongoDB();
+    const result = await db.collection('camisetas').deleteOne({ _id: new ObjectId(productoId) });
+    console.log('Producto eliminado:', result);
+    return result;
+  } catch (error) {
+    console.error('Error al eliminar producto:', error);
+    throw error;
+  }
+}
+
  
  // Ruta para mostrar el formulario de añadir producto
  app.get('/productos/agregar', async (req, res) => {
@@ -162,6 +175,25 @@ app.get('/producto/:id', async (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 });
+
+app.post('/producto/:id/eliminar', async (req, res) => {
+  try {
+    const productoId = req.params.id;
+
+    if (!ObjectId.isValid(productoId)) {
+      return res.status(400).send('ID de producto no válido');
+    }
+
+    await eliminarProducto(productoId);
+    res.redirect('/productos');
+  } catch (error) {
+    console.error('Error al eliminar producto:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+
+
 
 // Define una ruta para la raíz de la aplicación
 app.get('/', (req, res) => {

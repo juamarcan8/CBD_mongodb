@@ -24,8 +24,14 @@
 
     <% if (content === 'add-product-form') { %>
       <%- include('add-product-form.ejs') %>
-      <% } else if (content === 'product-details') { %>
-        <%- include('product-details.ejs') %>
+    <% } else if (content === 'product-details') { %>
+      <%- include('product-details.ejs', { producto: producto }) %>
+
+      <!-- Formulario para eliminar el producto -->
+      <form action="/producto/<%= producto._id %>/eliminar" method="post">
+        <input type="submit" class="delete-form-button" value="Eliminar producto">
+      </form>
+
     <% } else { %>
       <div id="results-container">
         <% if (typeof productos !== 'undefined' && productos.length > 0) { %>
