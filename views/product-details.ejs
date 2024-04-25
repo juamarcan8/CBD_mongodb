@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalles del Producto</title>
+  <link rel="stylesheet" href="/layout.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Detalles del Producto</h1>
+
+    <div id="product-details">
+      <h2><%= producto.nombre %></h2>
+      <p><strong>Descripción:</strong> <%= producto.descripcion %></p>
+      <p><strong>Precio:</strong> <%= producto.precio %></p>
+      <p><strong>Tallas:</strong> <%= producto.tallas.join(', ') %></p>
+      <p><strong>Colores:</strong> <%= producto.colores.join(', ') %></p>
+      <p><strong>Cantidad:</strong> <%= producto.cantidad %></p>
+      <p><strong>Proveedor:</strong> <%= producto.proveedor.nombre %></p>
+      <p><strong>Contacto del Proveedor:</strong> <%= producto.proveedor.contacto %></p>
+      <p><strong>Imágenes:</strong></p>
+      <ul>
+        <% producto.imagenes.forEach(imagen => { %>
+          <li><img src="<%= imagen %>" alt="<%= producto.nombre %>"></li>
+        <% }); %>
+      </ul>
+    </div>
+
+    <a href="/productos">
+      <button class="back-button">Volver al listado</button>
+    </a>
+
+  </div>
+
+</body>
+</html>

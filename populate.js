@@ -567,6 +567,444 @@ const sudaderas = [
   }
 ];
 
+const zapatos = [
+  {
+    "nombre": "Zapatillas deportivas",
+    "descripcion": "Zapatillas deportivas con diseño moderno.",
+    "precio": 59.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["blanco", "negro", "gris", "azul"],
+    "cantidad": 100,
+    "imagenes": ["zapatillas1.jpg", "zapatillas1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor A",
+      "contacto": "proveedora@example.com"
+    }
+  },
+  {
+    "nombre": "Zapatos de vestir",
+    "descripcion": "Zapatos de vestir elegantes y clásicos.",
+    "precio": 79.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "marrón", "azul marino"],
+    "cantidad": 80,
+    "imagenes": ["zapatos2.jpg", "zapatos2_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor B",
+      "contacto": "proveedorb@example.com"
+    }
+  },
+  {
+    "nombre": "Botas de montaña",
+    "descripcion": "Botas de montaña resistentes y cómodas.",
+    "precio": 99.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "gris", "verde"],
+    "cantidad": 120,
+    "imagenes": ["botas1.jpg", "botas1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor C",
+      "contacto": "proveedorc@example.com"
+    }
+  },
+  {
+    "nombre": "Sandalias de verano",
+    "descripcion": "Sandalias de verano cómodas y frescas.",
+    "precio": 39.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["blanco", "negro", "rojo"],
+    "cantidad": 150,
+    "imagenes": ["sandalias1.jpg", "sandalias1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor D",
+      "contacto": "proveedord@example.com"
+    }
+  },
+  {
+    "nombre": "Zapatillas de lona",
+    "descripcion": "Zapatillas de lona informales y cómodas.",
+    "precio": 29.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["blanco", "negro", "gris"],
+    "cantidad": 180,
+    "imagenes": ["zapatillas2.jpg", "zapatillas2_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor E",
+      "contacto": "proveedore@example.com"
+    }
+  },
+  {
+    "nombre": "Mocasines de cuero",
+    "descripcion": "Mocasines de cuero elegantes y confortables.",
+    "precio": 69.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "marrón", "azul"],
+    "cantidad": 100,
+    "imagenes": ["mocasines1.jpg", "mocasines1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor F",
+      "contacto": "proveedorf@example.com"
+    }
+  },
+  {
+    "nombre": "Zapatos deportivos",
+    "descripcion": "Zapatos deportivos ligeros y transpirables.",
+    "precio": 49.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["blanco", "negro", "azul"],
+    "cantidad": 130,
+    "imagenes": ["zapatos3.jpg", "zapatos3_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor G",
+      "contacto": "proveedorg@example.com"
+    }
+  },
+  {
+    "nombre": "Botines de cuero",
+    "descripcion": "Botines de cuero versátiles y estilosos.",
+    "precio": 89.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "marrón", "gris"],
+    "cantidad": 90,
+    "imagenes": ["botines1.jpg", "botines1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor H",
+      "contacto": "proveedorh@example.com"
+    }
+  },
+  {
+    "nombre": "Zapatillas de running",
+    "descripcion": "Zapatillas de running con tecnología avanzada.",
+    "precio": 69.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "azul", "verde"],
+    "cantidad": 110,
+    "imagenes": ["zapatillas4.jpg", "zapatillas4_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor I",
+      "contacto": "proveedori@example.com"
+    }
+  },
+  {
+    "nombre": "Zapatos de tacón",
+    "descripcion": "Zapatos de tacón elegantes para ocasiones especiales.",
+    "precio": 79.99,
+    "tallas": ["38", "39", "40", "41", "42"],
+    "colores": ["negro", "rojo", "nude"],
+    "cantidad": 70,
+    "imagenes": ["zapatos4.jpg", "zapatos4_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor J",
+      "contacto": "proveedorj@example.com"
+    }
+  }
+];
+
+const chaquetas = [
+  {
+    "nombre": "Chaqueta vaquera",
+    "descripcion": "Chaqueta vaquera clásica y atemporal.",
+    "precio": 49.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["azul claro", "azul oscuro"],
+    "cantidad": 100,
+    "imagenes": ["chaqueta1.jpg", "chaqueta1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor A",
+      "contacto": "proveedora@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta acolchada",
+    "descripcion": "Chaqueta acolchada para días fríos.",
+    "precio": 79.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "gris", "azul"],
+    "cantidad": 80,
+    "imagenes": ["chaqueta2.jpg", "chaqueta2_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor B",
+      "contacto": "proveedorb@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta de cuero",
+    "descripcion": "Chaqueta de cuero elegante y resistente.",
+    "precio": 159.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "marrón", "rojo"],
+    "cantidad": 120,
+    "imagenes": ["chaqueta3.jpg", "chaqueta3_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor C",
+      "contacto": "proveedorc@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta impermeable",
+    "descripcion": "Chaqueta impermeable y transpirable.",
+    "precio": 89.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "azul", "verde"],
+    "cantidad": 150,
+    "imagenes": ["chaqueta4.jpg", "chaqueta4_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor D",
+      "contacto": "proveedord@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta bomber",
+    "descripcion": "Chaqueta bomber casual y moderna.",
+    "precio": 69.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "verde oliva", "azul"],
+    "cantidad": 180,
+    "imagenes": ["chaqueta5.jpg", "chaqueta5_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor E",
+      "contacto": "proveedore@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta de punto",
+    "descripcion": "Chaqueta de punto suave y cómoda.",
+    "precio": 39.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["gris", "negro", "azul"],
+    "cantidad": 100,
+    "imagenes": ["chaqueta6.jpg", "chaqueta6_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor F",
+      "contacto": "proveedorf@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta deportiva",
+    "descripcion": "Chaqueta deportiva ligera y transpirable.",
+    "precio": 49.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "azul", "rojo"],
+    "cantidad": 130,
+    "imagenes": ["chaqueta7.jpg", "chaqueta7_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor G",
+      "contacto": "proveedorg@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta de plumas",
+    "descripcion": "Chaqueta de plumas ligera y cálida.",
+    "precio": 99.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "azul", "verde"],
+    "cantidad": 90,
+    "imagenes": ["chaqueta8.jpg", "chaqueta8_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor H",
+      "contacto": "proveedorh@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta vaquera oversize",
+    "descripcion": "Chaqueta vaquera oversize con diseño moderno.",
+    "precio": 59.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["azul claro", "azul oscuro"],
+    "cantidad": 110,
+    "imagenes": ["chaqueta9.jpg", "chaqueta9_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor I",
+      "contacto": "proveedori@example.com"
+    }
+  },
+  {
+    "nombre": "Chaqueta de cuero biker",
+    "descripcion": "Chaqueta de cuero biker con estilo rebelde.",
+    "precio": 129.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "marrón", "rojo"],
+    "cantidad": 70,
+    "imagenes": ["chaqueta10.jpg", "chaqueta10_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor J",
+      "contacto": "proveedorj@example.com"
+    }
+  }
+];
+
+const vestidos = [
+  {
+    "nombre": "Vestido casual",
+    "descripcion": "Vestido casual de algodón para uso diario.",
+    "precio": 39.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["azul", "rojo", "negro"],
+    "cantidad": 90,
+    "imagenes": ["vestido1.jpg", "vestido1_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor K",
+      "contacto": "proveedork@example.com"
+    }
+  },
+  {
+    "nombre": "Vestido de noche",
+    "descripcion": "Elegante vestido de noche con detalles brillantes.",
+    "precio": 99.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "azul", "rojo"],
+    "cantidad": 50,
+    "imagenes": ["vestido2.jpg", "vestido2_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor L",
+      "contacto": "proveedorl@example.com"
+    }
+  },
+  {
+    "nombre": "Vestido estampado",
+    "descripcion": "Vestido estampado con diseños florales.",
+    "precio": 49.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["blanco", "negro", "azul"],
+    "cantidad": 80,
+    "imagenes": ["vestido3.jpg", "vestido3_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor M",
+      "contacto": "proveedorm@example.com"
+    }
+  },
+  {
+    "nombre": "Vestido midi",
+    "descripcion": "Vestido midi elegante y cómodo.",
+    "precio": 59.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["negro", "gris", "rojo"],
+    "cantidad": 70,
+    "imagenes": ["vestido4.jpg", "vestido4_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor N",
+      "contacto": "proveedorn@example.com"
+    }
+  },
+  {
+    "nombre": "Vestido de verano",
+    "descripcion": "Vestido ligero y fresco para el verano.",
+    "precio": 34.99,
+    "tallas": ["S", "M", "L", "XL"],
+    "colores": ["blanco", "azul", "amarillo"],
+    "cantidad": 100,
+    "imagenes": ["vestido5.jpg", "vestido5_back.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor O",
+      "contacto": "proveedoro@example.com"
+    }
+  }
+];
+
+const accesorios = [
+  {
+    "nombre": "Bufanda",
+    "descripcion": "Bufanda suave y cálida.",
+    "precio": 14.99,
+    "colores": ["rojo", "azul", "gris"],
+    "cantidad": 120,
+    "imagenes": ["accesorio1.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor P",
+      "contacto": "proveedorp@example.com"
+    }
+  },
+  {
+    "nombre": "Gorra",
+    "descripcion": "Gorra ajustable y cómoda.",
+    "precio": 19.99,
+    "colores": ["negro", "azul", "blanco"],
+    "cantidad": 150,
+    "imagenes": ["accesorio2.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor Q",
+      "contacto": "proveedorq@example.com"
+    }
+  },
+  {
+    "nombre": "Gafas de sol",
+    "descripcion": "Gafas de sol con protección UV.",
+    "precio": 29.99,
+    "colores": ["negro", "marrón", "azul"],
+    "cantidad": 100,
+    "imagenes": ["accesorio3.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor R",
+      "contacto": "proveedorr@example.com"
+    }
+  },
+  {
+    "nombre": "Cinturón",
+    "descripcion": "Cinturón de cuero elegante.",
+    "precio": 24.99,
+    "colores": ["negro", "marrón", "gris"],
+    "cantidad": 130,
+    "imagenes": ["accesorio4.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor S",
+      "contacto": "proveedors@example.com"
+    }
+  }
+];
+
+const bolsos = [
+  {
+    "nombre": "Bolso de mano",
+    "descripcion": "Bolso de mano elegante y versátil.",
+    "precio": 59.99,
+    "colores": ["negro", "marrón", "rojo"],
+    "cantidad": 90,
+    "imagenes": ["bolso1.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor T",
+      "contacto": "proveedort@example.com"
+    }
+  },
+  {
+    "nombre": "Mochila",
+    "descripcion": "Mochila espaciosa y cómoda.",
+    "precio": 69.99,
+    "colores": ["negro", "azul", "gris"],
+    "cantidad": 120,
+    "imagenes": ["bolso2.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor U",
+      "contacto": "proveedoru@example.com"
+    }
+  },
+  {
+    "nombre": "Bolso bandolera",
+    "descripcion": "Bolso bandolera práctico y moderno.",
+    "precio": 49.99,
+    "colores": ["negro", "azul", "marrón"],
+    "cantidad": 100,
+    "imagenes": ["bolso3.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor V",
+      "contacto": "proveedorv@example.com"
+    }
+  },
+  {
+    "nombre": "Bolso tote",
+    "descripcion": "Bolso tote espacioso y elegante.",
+    "precio": 79.99,
+    "colores": ["negro", "marrón", "gris"],
+    "cantidad": 80,
+    "imagenes": ["bolso4.jpg"],
+    "proveedor": {
+      "nombre": "Proveedor W",
+      "contacto": "proveedorw@example.com"
+    }
+  }
+];
+
+
+
 
 // Función para insertar datos en la base de datos
 async function insertarDatos() {
@@ -581,7 +1019,12 @@ async function insertarDatos() {
     await db.collection('camisetas').insertMany(camisetas);
     await db.collection('pantalones').insertMany(pantalones);
     await db.collection('faldas').insertMany(faldas);
-    await db.collection('sudaderas').insertMany(sudaderas)
+    await db.collection('sudaderas').insertMany(sudaderas);
+    await db.collection('zapatos').insertMany(zapatos);
+    await db.collection('chaquetas').insertMany(chaquetas);
+    await db.collection('vestidos').insertMany(vestidos);
+    await db.collection('accesorios').insertMany(accesorios);
+    await db.collection('bolsos').insertMany(bolsos);
 
     console.log('Datos insertados correctamente en la base de datos');
   } catch (error) {
