@@ -42,7 +42,7 @@ async function obtenerTiposDeColeccion() {
   try {
      const db = await conectarMongoDB();
      const result = await db.collection(tipo).insertOne(producto);
-     console.log('Producto agregado:', result);
+
      return result;
   } catch (error) {
      console.error('Error al agregar producto:', error);
@@ -54,7 +54,7 @@ async function obtenerTiposDeColeccion() {
   try {
     const db = await conectarMongoDB();
     const result = await db.collection('camisetas').deleteOne({ _id: new ObjectId(productoId) });
-    console.log('Producto eliminado:', result);
+   
     return result;
   } catch (error) {
     console.error('Error al eliminar producto:', error);
@@ -120,12 +120,23 @@ async function obtenerTiposDeColeccion() {
   }
  });
 
+ async function buscarProductoPorId(db, id) {
+  const colecciones = ['camisetas', 'pantalones', 'faldas', 'sudaderas', 'zapatos', 'chaquetas', 'vestidos', 'accesorios', 'bolsos'];
+
+  for (let coleccion of colecciones) {
+    const producto = await db.collection(coleccion).findOne({ _id: new ObjectId(id) });
+    if (producto) {
+      return {producto,coleccion};
+    }
+  }
+
+  return null; // Si no se encuentra en ninguna colección
+}
 
 // Ruta para mostrar los detalles de un producto
 app.get('/producto/:id', async (req, res) => {
   try {
     const db = await conectarMongoDB();
-
     const productoId = req.params.id;
 
     // Comprobar si productoId es un ObjectId válido
@@ -133,40 +144,11 @@ app.get('/producto/:id', async (req, res) => {
       return res.status(400).send('ID de producto no válido');
     }
 
-    console.log('Buscando producto con ID:', productoId); // Registro de depuración
 
-    let producto = await db.collection('camisetas').findOne({ _id: new ObjectId(productoId) });
-
-    if (!producto) {
-      producto = await db.collection('pantalones').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('faldas').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('sudaderas').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('zapatos').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('chaquetas').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('vestidos').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('accesorios').findOne({ _id: new ObjectId(productoId) });
-    }
-    if (!producto) {
-      producto = await db.collection('bolsos').findOne({ _id: new ObjectId(productoId) });
-    }
-    
-
-    console.log('Producto encontrado:', producto); // Registro de depuración
+    const {producto,coleccion} = await buscarProductoPorId(db, productoId);
 
     if (producto) {
-      res.render('layout', { content: 'product-details', producto: producto });
+      res.render('layout', { content: 'product-details', producto });
     } else {
       res.status(404).send('Producto no encontrado en ninguna colección');
     }
@@ -192,8 +174,82 @@ app.post('/producto/:id/eliminar', async (req, res) => {
   }
 });
 
+app.get('/stock/:idProducto', async (req, res) => {
+  try {
+    const db = await conectarMongoDB();
+    const idProducto = req.params.idProducto;
+
+    // Buscar el producto por su ID
+    const {producto,coleccion} = await buscarProductoPorId(db, idProducto);
+    
+    if (!producto) {
+      // Si no se encuentra el producto, renderizar una vista de error o redirigir a otra página
+      // Aquí asumo que tienes una vista de error llamada 'error.ejs'
+      return res.render('error', { message: 'Producto no encontrado' });
+    }
+
+    // Obtener el stock del producto
+    const stock = await obtenerStockPorProducto(db, idProducto);
+  
+    // Renderizar la vista de stock con el producto y el stock
+    res.render('stock', { idProducto, producto, stock, error: null });
+  } catch (error) {
+    console.error('Error al buscar el producto:', error);
+    res.render('error', { message: 'Error interno del servidor' });
+  }
+});
+
+app.get("/aumentarStock", async (req, res) => {
+  try {
+    const db = await conectarMongoDB();
+    const { producto, talla, color } = req.query;
+  
+
+    const {prenda,coleccion} = await buscarProductoPorId(db,producto);
+    db.collection(coleccion).updateOne({ "_id": new ObjectId(producto) },
+    { $inc: { ["stock." + talla + "." + color]: 1 } }
+    );
+    res.redirect(`/stock/${producto}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error interno del servidor');
+  }
+ 
+});
+
+app.get("/reducirStock", async (req, res) => {
+  try {
+    const db = await conectarMongoDB();
+    const { producto, talla, color } = req.query;
+
+    const {prenda,coleccion} = await buscarProductoPorId(db,producto);
+    db.collection(coleccion).updateOne({ "_id": new ObjectId(producto) },
+    { $inc: { ["stock." + talla + "." + color]: -1 } }
+    );
+    res.redirect(`/stock/${producto}`);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error interno del servidor');
+  }
+ 
+});
 
 
+async function obtenerStockPorProducto(db, idProducto) {
+  const producto = await db.collection("camisetas").findOne({
+    "_id": new ObjectId(idProducto),
+  });
+
+  if (!producto) {
+    throw new Error("Producto no encontrado");
+  }
+
+  return producto.stock;
+}
+
+async function incrementarProducto(db,idProducto, talla,color){
+  
+}
 
 // Define una ruta para la raíz de la aplicación
 app.get('/', (req, res) => {
