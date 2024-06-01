@@ -236,20 +236,10 @@ app.get("/reducirStock", async (req, res) => {
 
 
 async function obtenerStockPorProducto(db, idProducto) {
-  const producto = await db.collection("camisetas").findOne({
-    "_id": new ObjectId(idProducto),
-  });
-
-  if (!producto) {
-    throw new Error("Producto no encontrado");
-  }
-
+  const {producto,coleccion} = await buscarProductoPorId(db,idProducto)
   return producto.stock;
 }
 
-async function incrementarProducto(db,idProducto, talla,color){
-  
-}
 
 // Define una ruta para la raíz de la aplicación
 app.get('/', (req, res) => {
