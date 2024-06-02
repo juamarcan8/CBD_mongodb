@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alerta de Stock</title>
+  <link rel="stylesheet" href="/layout.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Productos con Bajo Stock</h1>
+    <% if (productosConBajoStock.length > 0) { %>
+      <ul>
+        <% productosConBajoStock.forEach(producto => { %>
+          <li>
+            <a href="/producto/<%= producto._id %>">
+              <%= producto.nombre %>: <%= producto.descripcion %> (Stock bajo en alguna talla/color)
+            </a>
+          </li>
+        <% }); %>
+      </ul>
+    <% } else { %>
+      <p>No hay productos con bajo stock.</p>
+    <% } %>
+  </div>
+</body>
+</html>

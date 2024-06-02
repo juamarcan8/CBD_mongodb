@@ -1,10 +1,27 @@
-<form id="search-form">
-    <label for="tipo">Tipo de Producto:</label>
-    <select id="tipo" name="tipo">
-      <% tiposDeColeccion.forEach(tipo => { %>
-        <option value="<%= tipo %>"><%= tipo %></option>
-      <% }); %>
-    </select>
-    <button type="submit">Buscar</button>
+<form id="search-form" action="/productos" method="get">
+  <div class="form-group">
+      <label for="tipo">Tipo de Producto:</label>
+      <select id="tipo" name="tipo">
+          <% tiposDeColeccion.forEach(tipo => { %>
+              <option value="<%= tipo %>" <%= tipo === tipoSeleccionado ? 'selected' : '' %>><%= tipo %></option>
+          <% }); %>
+      </select>
+  </div>
+  <div class="form-group">
+      <label for="talla">Talla:</label>
+      <select id="talla" name="talla" required>
+          <% tallasDisponibles.forEach(talla => { %>
+              <option value="<%= talla %>" <%= talla === tallaSeleccionada ? 'selected' : '' %>><%= talla %></option>
+          <% }); %>
+      </select>
+  </div>
+  <div class="form-group">
+      <label for="color">Color:</label>
+      <select id="color" name="color" required>
+          <% coloresDisponibles.forEach(color => { %>
+              <option value="<%= color %>" <%= color === colorSeleccionado ? 'selected' : '' %>><%= color %></option>
+          <% }); %>
+      </select>
+  </div>
+  <button type="submit">Buscar</button>
 </form>
-  

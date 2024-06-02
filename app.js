@@ -104,23 +104,43 @@ async function obtenerTiposDeColeccion() {
  // Ruta para mostrar el listado de productos
  app.get('/productos', async (req, res) => {
   try {
-     let tiposDeColeccion = await obtenerTiposDeColeccion();
-     let tipoSeleccionado = req.query.tipo || "camisetas"; // Si no se especifica tipo, se usa "camisetas"
-     const db = client.db(dbName);
- 
-     if (tiposDeColeccion.includes(tipoSeleccionado)) {
-       productos = await db.collection(tipoSeleccionado).find({}).toArray();
-       res.render('layout', { content: 'search-form', tiposDeColeccion });
-     } else {
-       res.status(404).send('Tipo de producto no válido');
-     }
-  } catch (error) {
-     console.error('Error al obtener tipos de colección:', error);
-     res.status(500).send('Error interno del servidor');
-  }
- });
+    let tiposDeColeccion = await obtenerTiposDeColeccion();
+    let tipoSeleccionado = req.query.tipo || "camisetas"; // Si no se especifica tipo, se usa "camisetas"
+    let tallaSeleccionada = req.query.talla;
+    let colorSeleccionado = req.query.color;
+    let tallasDisponibles = ["S", "M", "L", "XL","30","32","34","36"];
+    let coloresDisponibles = ["azul", "gris","blanco","negro","azul claro","azul oscuro","caqui", "verde militar"];
+    const db = client.db(dbName);
 
- async function buscarProductoPorId(db, id) {
+    if (tiposDeColeccion.includes(tipoSeleccionado)) {
+      let filtro = {};
+
+      if (tallaSeleccionada && colorSeleccionado) {
+        filtro[`stock.${tallaSeleccionada}.${colorSeleccionado}`] = { $gt: 0 };
+      }
+
+      let productos = await db.collection(tipoSeleccionado).find(filtro).toArray();
+      res.render('layout', {
+        content: 'search-form',
+        tiposDeColeccion,
+        tallasDisponibles,
+        coloresDisponibles,
+        productos,
+        tipoSeleccionado,
+        tallaSeleccionada,
+        colorSeleccionado
+      });
+    } else {
+      res.status(404).send('Tipo de producto no válido');
+    }
+  } catch (error) {
+    console.error('Error al obtener tipos de colección:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+
+async function buscarProductoPorId(db, id) {
   const colecciones = ['camisetas', 'pantalones', 'faldas', 'sudaderas', 'zapatos', 'chaquetas', 'vestidos', 'accesorios', 'bolsos'];
 
   for (let coleccion of colecciones) {
@@ -239,6 +259,55 @@ async function obtenerStockPorProducto(db, idProducto) {
   const {producto,coleccion} = await buscarProductoPorId(db,idProducto)
   return producto.stock;
 }
+
+app.get('/alerta/stock', async (req, res) => {
+  try {
+    const db = client.db(dbName);
+    const productosConBajoStock = [];
+    const colecciones = ['camisetas', 'pantalones', 'faldas', 'sudaderas', 'zapatos', 'chaquetas', 'vestidos', 'accesorios', 'bolsos'];
+    const tallas = ["S", "M", "L", "XL","30","32","34","36"];; // Todas las tallas posibles
+    let coloresDisponibles = await obtenerColoresPrendas(db);
+    
+    for(let coleccion of colecciones){
+      for (let talla of tallas) {
+        for(let color of coloresDisponibles){
+          const productos = await db.collection(coleccion).find({
+          [`stock.${talla}.${color}`]: { $lt: 5 }
+          }).toArray();
+          productosConBajoStock.push(...productos);
+        }
+      }
+    }
+    res.render('alerta', {
+      content: 'alerta-stock',
+      productosConBajoStock
+    });
+  } catch (error) {
+    console.error('Error al obtener productos con bajo stock:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+});
+async function obtenerColoresPrendas(db) {
+  try {
+    const coleccion = await obtenerTiposDeColeccion();
+    const coloresSet = new Set(); // Definir coloresSet fuera del bucle forEach
+    for (let col of coleccion) {
+      const prendas = await db.collection(col).find({}).toArray();
+
+      prendas.forEach(prenda => {
+        prenda.colores.forEach(color => {
+          coloresSet.add(color);
+        });
+      });
+    }
+
+    return Array.from(coloresSet);
+  } catch (error) {
+    console.error('Error al obtener colores de prendas:', error);
+    throw error;
+  }
+}
+
 
 
 // Define una ruta para la raíz de la aplicación
