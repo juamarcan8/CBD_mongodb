@@ -38,15 +38,23 @@ async function obtenerTiposDeColeccion() {
   }
  }
  
- async function agregarProducto(tipo, producto) {
+ async function agregarProducto(tipo, producto, cantidad) {
   try {
-     const db = await conectarMongoDB();
-     const result = await db.collection(tipo).insertOne(producto);
-
-     return result;
+    const db = await conectarMongoDB();
+    const result = await db.collection(tipo).insertOne(producto);
+    for (talla of producto.tallas) {
+      for (color of producto.colores){
+        await db.collection(tipo).updateOne({
+          "_id" :  new ObjectId(producto._id)
+        }, {
+          $inc: { ["stock." + talla + "." + color]: cantidad }
+        })
+      }
+    }
+    return result;
   } catch (error) {
-     console.error('Error al agregar producto:', error);
-     throw error;
+    console.error('Error al agregar producto:', error);
+    throw error;
   }
  }
 
@@ -77,7 +85,7 @@ async function obtenerTiposDeColeccion() {
  // Ruta para manejar el formulario de añadir producto
  app.post('/productos/agregar', async (req, res) => {
   try {
-     const { tipo, nombre, descripcion, precio, tallas, colores, cantidad, imagenes, 'proveedor-nombre': proveedorNombre, 'proveedor-contacto': proveedorContacto } = req.body;
+     const { tipo, nombre, descripcion, precio, tallas, colores,cantidad, imagenes, 'proveedor-nombre': proveedorNombre, 'proveedor-contacto': proveedorContacto } = req.body;
  
      const producto = {
        nombre,
@@ -85,7 +93,6 @@ async function obtenerTiposDeColeccion() {
        precio: parseFloat(precio),
        tallas: tallas.split(',').map(talla => talla.trim()),
        colores: colores.split(',').map(color => color.trim()),
-       cantidad: parseInt(cantidad),
        imagenes: imagenes.split(',').map(imagen => imagen.trim()),
        proveedor: {
          nombre: proveedorNombre,
@@ -93,7 +100,7 @@ async function obtenerTiposDeColeccion() {
        }
      };
  
-     await agregarProducto(tipo, producto);
+     await agregarProducto(tipo, producto,parseInt(cantidad, 10));
      res.redirect('/productos');
   } catch (error) {
      console.error('Error al procesar formulario de agregar producto:', error);
@@ -267,7 +274,7 @@ app.get('/alerta/stock', async (req, res) => {
     const colecciones = ['camisetas', 'pantalones', 'faldas', 'sudaderas', 'zapatos', 'chaquetas', 'vestidos', 'accesorios', 'bolsos'];
     const tallas = ["S", "M", "L", "XL","30","32","34","36"];; // Todas las tallas posibles
     let coloresDisponibles = await obtenerColoresPrendas(db);
-    
+
     for(let coleccion of colecciones){
       for (let talla of tallas) {
         for(let color of coloresDisponibles){
@@ -287,6 +294,7 @@ app.get('/alerta/stock', async (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 });
+
 async function obtenerColoresPrendas(db) {
   try {
     const coleccion = await obtenerTiposDeColeccion();
