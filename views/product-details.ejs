@@ -3,12 +3,67 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalles del Producto</title>
   <link rel="stylesheet" href="/layout.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    #product-details {
+      background-color: #f9f9f9;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    #product-details h2 {
+      margin-top: 0;
+    }
+    #product-details p {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+    .back-button {
+      display: block;
+      width: 90%;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      margin-bottom: 10px;
+    }
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .delete-button-container {
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>Detalles del Producto</h1>
 
     <div id="product-details">
       <h2><%= producto.nombre %></h2>
@@ -20,18 +75,16 @@
       <p><strong>Colores:</strong> <%= producto.colores.join(', ') %></p>
       <p><strong>Proveedor:</strong> <%= producto.proveedor.nombre %></p>
       <p><strong>Contacto del Proveedor:</strong> <%= producto.proveedor.contacto %></p>
-      <p><strong>Imágenes:</strong></p>
-      
     </div>
 
-    <a href="/productos">
-      <button class="back-button">Volver al listado</button>
-    </a>
-    <a href="/stock/<%= producto._id %>">
-      <button class="back-button">Consultar Stock</button>
-    </a>
-    
+    <div class="button-container">
+      <a href="/productos">
+        <button class="back-button">Volver al listado</button>
+      </a>
+      <a href="/stock/<%= producto._id %>">
+        <button class="back-button">Consultar Stock</button>
+      </a>
+    </div>
   </div>
-
 </body>
 </html>

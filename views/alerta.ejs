@@ -5,23 +5,108 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Alerta de Stock</title>
   <link rel="stylesheet" href="/layout.css">
+  <style>
+    * {
+        box-sizing: border-box;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        overflow-x: hidden;
+    }
+    header, footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: white;
+      width: 100%;
+    }
+    header h1 {
+      color: white;
+      margin: 0;
+    }
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        gap: 20px;
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    table {
+        width: 100%; /* La tabla ocupa el ancho completo */
+        max-width: 800px; /* Ancho máximo para la tabla */
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+    th {
+        background-color: #333;
+        color: white;
+    }
+    .button-link {
+        display: inline-block;
+        padding: 15px 25px;
+        font-size: 16px;
+        color: white;
+        background-color: #007BFF;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+    }
+    .button-link:hover {
+        background-color: #0056b3;
+    }
+    footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #333;
+        color: white;
+        width: 100%;
+        margin-top: auto; /* Alinea el footer al final de la página */
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Productos con Bajo Stock</h1>
-    <% if (productosConBajoStock.length > 0) { %>
-      <ul>
-        <% productosConBajoStock.forEach(producto => { %>
-          <li>
-            <a href="/producto/<%= producto._id %>">
-              <%= producto.nombre %>: <%= producto.descripcion %> (Stock bajo en alguna talla/color)
-            </a>
-          </li>
-        <% }); %>
-      </ul>
-    <% } else { %>
-      <p>No hay productos con bajo stock.</p>
-    <% } %>
-  </div>
+  <header>
+      <h1>Alerta de Stock</h1>
+  </header>
+  <main>
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (productosConBajoStock.length > 0) { %>
+          <% productosConBajoStock.forEach(producto => { %>
+            <tr>
+              <td><%= producto.nombre %></td>
+              <td><%= producto.descripcion %> (Stock bajo en alguna talla/color)</td>
+              <td><a href="/producto/<%= producto._id %>">Ver más</a></td>
+            </tr>
+          <% }); %>
+        <% } else { %>
+          <tr>
+            <td colspan="3">No hay productos con bajo stock.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </main>
+  <footer>
+      <p>© 2024 - Todos los derechos reservados</p>
+  </footer>
 </body>
 </html>

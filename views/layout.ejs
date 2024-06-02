@@ -3,22 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buscador de Productos</title>
   <link rel="stylesheet" href="/layout.css">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
+    header, footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #333;
+      color: white;
+      width: 100%;
+    }
+    header h1 {
+      color: white;
+      margin: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* Alinea los elementos en el centro vertical */
+      align-items: center; /* Alinea los elementos en el centro horizontal */
+      flex-grow: 1;
+      padding: 20px;
+    }
+    .navigation-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+    .add-product-button, .delete-form-button, .edit-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 14px;
+      color: white;
+      background-color: #007BFF;
+      border: none;
+      border-radius: 5px;
+      text-align: center;
+      text-decoration: none;
+      cursor: pointer;
+      width: 100%;
+    }
+    .add-product-button:hover, .delete-form-button:hover, .edit-button:hover {
+      background-color: #0056b3;
+    }
+    #results-container ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    #results-container li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+    #results-container li a {
+      color: black;
+      text-decoration: none;
+      flex-grow: 1;
+      width: 100%;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Buscador de Productos</h1>
+  <% if (content === 'search-form') { %>
+    <header>
+      <h1>Búsqueda de productos</h1>
+    </header>
+  <% } else if (content === 'product-details') { %>
+    <header>
+      <h1>Detalles del producto</h1>
+    </header>
+  <% } %>
 
+  
+  <div class="container">
     <div class="navigation-buttons">
       <% if (content === 'search-form') { %>
         <%- include('search-form.ejs') %>  
-      <% } %>
-
-      <% if (content !== 'add-product-form' && content !== 'product-details') { %>
-        <a href="/productos/agregar">
-          <button class="add-product-button">Agregar Producto</button>
-        </a>
       <% } %>
     </div>
 
@@ -27,7 +103,6 @@
     <% } else if (content === 'product-details') { %>
       <%- include('product-details.ejs', { producto: producto }) %>
 
-      <!-- Formulario para eliminar el producto -->
       <form action="/producto/<%= producto._id %>/eliminar" method="post">
         <input type="submit" class="delete-form-button" value="Eliminar producto">
       </form>
@@ -38,24 +113,27 @@
           <h2>Resultados de la búsqueda:</h2>
           <ul>
             <% productos.forEach(producto => { %>
-              <a href="/producto/<%= producto._id %>">
-                <li>
-                  <%= producto.nombre %>: <%= producto.precio %>
-                  <form action="/editar" method="GET"> 
-                    <input type="hidden" name="id" value="<%= producto._id %>"> 
-                    <button type="submit">Editar</button> 
-                  </form>
-                </li>
-              </a>
+              <li>
+                <a href="/producto/<%= producto._id %>">
+                  <span><%= producto.nombre %>: <%= producto.precio %></span>
+                </a>
+              </li>
             <% }); %>
           </ul>
         <% } else { %>
           <p>No hay resultados para mostrar.</p>
         <% } %>
+
+        <% if (content !== 'add-product-form' && content !== 'product-details') { %>
+          <a href="/productos/agregar">
+            <button class="add-product-button">Agregar Producto</button>
+          </a>
+        <% } %>
       </div>
     <% } %>
-
   </div>
-
+  <footer>
+    <p>© 2024 - Todos los derechos reservados</p>
+  </footer>
 </body>
 </html>

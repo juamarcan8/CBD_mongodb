@@ -427,7 +427,7 @@ const faldas = [
     "tallas": ["S", "M", "L"],
     "colores": ["negro", "gris", "azul marino"],
     "stock": {
-      "S": { "negro": 30, "gris": 25, "azul marino": 20 },
+      "S": { "negro": 3, "gris": 2, "azul marino": 20 },
       "M": { "negro": 35, "gris": 30, "azul marino": 25 },
       "L": { "negro": 40, "gris": 35, "azul marino": 30 }
     },
@@ -1156,7 +1156,7 @@ const vestidos = [
     "tallas": ["S", "M", "L", "XL"],
     "colores": ["blanco", "azul", "amarillo"],
     "stock": {
-      "S": { "blanco": 33, "azul": 33, "amarillo": 34 },
+      "S": { "blanco": 3, "azul": 3, "amarillo": 34 },
       "M": { "blanco": 33, "azul": 33, "amarillo": 34 },
       "L": { "blanco": 33, "azul": 33, "amarillo": 34 },
       "XL": { "blanco": 33, "azul": 33, "amarillo": 34 }
