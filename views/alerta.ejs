@@ -30,6 +30,7 @@
     }
     main {
         display: flex;
+        flex-direction: column; /* Cambio a columna para alinear elementos verticalmente */
         justify-content: center;
         align-items: center;
         flex-grow: 1;
@@ -51,7 +52,7 @@
         background-color: #333;
         color: white;
     }
-    .button-link {
+    .button-link, .back-button {
         display: inline-block;
         padding: 15px 25px;
         font-size: 16px;
@@ -62,7 +63,7 @@
         text-align: center;
         text-decoration: none;
     }
-    .button-link:hover {
+    .button-link:hover, .back-button:hover {
         background-color: #0056b3;
     }
     footer {
@@ -104,7 +105,14 @@
         <% } %>
       </tbody>
     </table>
+  
+    <div>
+      <a href="/">
+        <button class="back-button">Volver a la página principal</button>
+      </a>
+    </div>
   </main>
+  
   <footer>
       <p>© 2024 - Todos los derechos reservados</p>
   </footer>

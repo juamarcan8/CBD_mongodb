@@ -243,24 +243,30 @@ app.get("/aumentarStock", async (req, res) => {
   }
  
 });
-
 app.get("/reducirStock", async (req, res) => {
   try {
     const db = await conectarMongoDB();
     const { producto, talla, color } = req.query;
 
-    const {prenda,coleccion} = await buscarProductoPorId(db,producto);
-    db.collection(coleccion).updateOne({ "_id": new ObjectId(producto) },
-    { $inc: { ["stock." + talla + "." + color]: -1 } }
-    );
-    res.redirect(`/stock/${producto}`);
+    const { prenda, coleccion } = await buscarProductoPorId(db, producto);
+    
+    const productoActual = await db.collection(coleccion).findOne({ "_id": new ObjectId(producto) });
+    const stockActual = productoActual.stock[talla][color];
+    
+    if (stockActual > 0) {
+      await db.collection(coleccion).updateOne(
+        { "_id": new ObjectId(producto) },
+        { $inc: { ["stock." + talla + "." + color]: -1 } }
+      );
+      res.redirect(`/stock/${producto}`);
+    } else {
+      res.status(400).send('No se puede reducir el stock, ya está en 0');
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send('Error interno del servidor');
   }
- 
 });
-
 
 async function obtenerStockPorProducto(db, idProducto) {
   const {producto,coleccion} = await buscarProductoPorId(db,idProducto)
@@ -270,30 +276,34 @@ async function obtenerStockPorProducto(db, idProducto) {
 app.get('/alerta/stock', async (req, res) => {
   try {
     const db = client.db(dbName);
-    const productosConBajoStock = [];
-    const colecciones = ['camisetas', 'pantalones', 'faldas', 'sudaderas', 'zapatos', 'chaquetas', 'vestidos', 'accesorios', 'bolsos'];
-    const tallas = ["S", "M", "L", "XL","30","32","34","36"];; // Todas las tallas posibles
-    let coloresDisponibles = await obtenerColoresPrendas(db);
+    const productosConBajoStock = new Set();
+    const colecciones = await obtenerTiposDeColeccion()
+    const tallas = ["S", "M", "L", "XL", "30", "32", "34", "36"]; // Todas las tallas posibles
+    const coloresDisponibles = await obtenerColoresPrendas(db);
 
-    for(let coleccion of colecciones){
+    for (let coleccion of colecciones) {
       for (let talla of tallas) {
-        for(let color of coloresDisponibles){
+        for (let color of coloresDisponibles) {
           const productos = await db.collection(coleccion).find({
-          [`stock.${talla}.${color}`]: { $lt: 5 }
+            [`stock.${talla}.${color}`]: { $lt: 5 }
           }).toArray();
-          productosConBajoStock.push(...productos);
+          productos.forEach(producto => productosConBajoStock.add(JSON.stringify(producto)));
         }
       }
     }
+    
+    const productosConBajoStockArray = Array.from(productosConBajoStock).map(producto => JSON.parse(producto));
+    
     res.render('alerta', {
       content: 'alerta-stock',
-      productosConBajoStock
+      productosConBajoStock: productosConBajoStockArray
     });
   } catch (error) {
     console.error('Error al obtener productos con bajo stock:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
+
 
 async function obtenerColoresPrendas(db) {
   try {
